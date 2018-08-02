@@ -37,10 +37,11 @@ def messageDecoder(client, userdata, msg):
 
             
 # door 2/4
+# my door number 2 required this modified pulse
     elif message == "op 24":
-        gpio.output(24, gpio.LOW)
-        time.sleep(.2)
         gpio.output(24, gpio.HIGH)
+        time.sleep(.2)
+        gpio.output(24, gpio.LOW)
         print("door #2 is opened/closed")
 
 
@@ -71,7 +72,7 @@ def messageDecoder(client, userdata, msg):
 gpioSetup()
 
 #client name
-clientName = "RPI3B"
+clientName = "GaragePi"
 
 #set mqtt sever addr
 #serverAddress = "10.0.0.50"

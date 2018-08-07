@@ -72,7 +72,7 @@ clientName = "GaragePi"
 
 #set the mqtt sever address
 
-#automatically get IP of device (not my code)
+#automatically get IP of device
 #source: https://stackoverflow.com/questions/166506
 #/finding-local-ip-addresses-using-pythons-stdlib
 

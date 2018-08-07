@@ -1,16 +1,14 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
+#This script requires special setup please see the documentation:
+# ~ documentation to be posed soon ~
 
 import paho.mqtt.client as mqtt
 import RPi.GPIO as gpio
 import time
 import socket
 
-#set up pins
+#set up gpio pins
 def gpioSetup():
-    #set pin numbering
     gpio.setmode(gpio.BCM)
-    #Set output pin
     gpio.setup(23, gpio.OUT)
     gpio.setup(24, gpio.OUT)
     gpio.setup(27, gpio.OUT)
@@ -25,7 +23,7 @@ def connectionStatus(client, userdata, flags, rc):
 def messageDecoder(client, userdata, msg):
     message = msg.payload.decode(encoding='UTF-8')
 
-# decode what is being sent:
+# deal with sending the commands to the server
 
 #door 1/4
 
@@ -62,20 +60,17 @@ def messageDecoder(client, userdata, msg):
         print("door #4 is opened/closed")
 
             
-
+        #should never reach else case
     else:
-            print("Major Error!!!")
+            print("Data recived is not a command")
 
 
     
-#set up RPI GPIO pins
 gpioSetup()
 
-#client name
 clientName = "GaragePi"
 
-#set mqtt sever addr
-#serverAddress = "10.0.0.50"
+#set the mqtt sever address
 
 #automatically get IP of device (not my code)
 #source: https://stackoverflow.com/questions/166506
@@ -87,17 +82,11 @@ serverAddress = (s.getsockname()[0])
 s.close()
 
 
-
-#Instantiateeclipse paho as mqttclient
 mqttClient = mqtt.Client(clientName)
 
-#calling functions
 mqttClient.on_connect = connectionStatus
 mqttClient.on_message = messageDecoder
 
-
-#connect client to server
 mqttClient.connect(serverAddress)
 
-#monitor forever
 mqttClient.loop_forever()
